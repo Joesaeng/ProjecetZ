@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 오브젝트풀
 public class PoolManager
 {
     #region Pool
@@ -88,6 +89,7 @@ public class PoolManager
         {
             CreatePool(original);
         }
+
         return _pool[original.name].Pop(parent);
     }
 

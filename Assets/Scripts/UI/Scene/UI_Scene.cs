@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UI_Scene : UI_Base
+public abstract class UI_Scene : UI_Base
 {
     public override void Init()
     {
@@ -16,10 +16,5 @@ public class UI_Scene : UI_Base
         canvas.overrideSorting = true;
 
         canvas.sortingOrder = ConstantData.SceneUISortOrder;
-    }
-
-    public override void OnChangeLanguage()
-    {
-        
     }
 }

@@ -1,5 +1,5 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class ResourceManager
 {
@@ -50,7 +50,7 @@ public class ResourceManager
 
         GameObject go;
 
-        if (original.TryGetComponent<Poolable>(out Poolable poolable))
+        if (original.TryGetComponent<Poolable>(out _))
         {
             go = Managers.Pool.Pop(original).gameObject;
             go.transform.SetPositionAndRotation(pos, Quaternion.identity);
@@ -75,31 +75,39 @@ public class ResourceManager
         Object.Destroy(go);
     }
 
-    public void DestroyDelay(GameObject go, float time)
+    public async void DestroyDelay(GameObject go, float time)
     {
         if (go == null)
             return;
 
         if (go.TryGetComponent<Poolable>(out Poolable poolable))
         {
-            Managers.Timer.StartTimer(time, () => Managers.Pool.Push(poolable));
+            // Managers.Timer.StartTimer(time, () => Managers.Pool.Push(poolable));
+            await UniTask.Delay(System.TimeSpan.FromSeconds(time * Managers.Time.GameTimeScale));
+            Managers.Pool.Push(poolable);
             return;
         }
 
-        Managers.Timer.StartTimer(time, () => Object.Destroy(go));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(time * Managers.Time.GameTimeScale));
+        Object.Destroy(go);
+        // Managers.Timer.StartTimer(time, () => Object.Destroy(go));
     }
 
-    public void DestroyDelayUnscaled(GameObject go, float time)
+    public async void DestroyDelayUnscaled(GameObject go, float time)
     {
         if (go == null)
             return;
 
         if (go.TryGetComponent<Poolable>(out Poolable poolable))
         {
-            Managers.Timer.StartTimerUnscaled(time, () => Managers.Pool.Push(poolable));
+            // Managers.Timer.StartTimerUnscaled(time, () => Managers.Pool.Push(poolable));
+            await UniTask.Delay(System.TimeSpan.FromSeconds(time),DelayType.UnscaledDeltaTime);
+            Managers.Pool.Push(poolable);
             return;
         }
 
-        Managers.Timer.StartTimerUnscaled(time, () => Object.Destroy(go));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(time), DelayType.UnscaledDeltaTime);
+        Object.Destroy(go);
+        // Managers.Timer.StartTimerUnscaled(time, () => Object.Destroy(go));
     }
 }

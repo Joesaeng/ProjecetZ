@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManagerEx : MonoBehaviour
+public class SceneManagerEx
 {
     public BaseScene CurrentScene { get; set; }
 
@@ -15,31 +17,50 @@ public class SceneManagerEx : MonoBehaviour
         SceneManager.LoadScene(GetSceneName(type));
     }
 
+    /// <summary>
+    /// 현재 Scene을 클리어하고 type에 맞는 Scene을 비동기적을 로드합니다.
+    /// </summary>
     public void LoadSceneWithLoadingScene(Define.Scene type)
     {
         Managers.Clear();
-        StartCoroutine(CoLoadGameAsync(type));
+        // StartCoroutine(CoLoadGameAsync(type));
+        LoadGameAsync(type).Forget();
     }
 
-    public IEnumerator CoLoadGameAsync(Define.Scene type)
+    private async UniTask LoadGameAsync(Define.Scene type)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(GetSceneName(type));
         ao.allowSceneActivation = false;
 
-        while (!ao.isDone)
+        while(ao.progress < 0.9f)
         {
-            yield return null;
-            if (ao.progress < 0.9f)
-            {
-
-            }
-            else
-            {
-                ao.allowSceneActivation = true;
-            }
-
+            await UniTask.Yield();
         }
+
+        ao.allowSceneActivation = true;
+
+        await UniTask.WaitUntil(() => ao.isDone);
     }
+
+    //public IEnumerator CoLoadGameAsync(Define.Scene type)
+    //{
+    //    AsyncOperation ao = SceneManager.LoadSceneAsync(GetSceneName(type));
+    //    ao.allowSceneActivation = false;
+
+    //    while (!ao.isDone)
+    //    {
+    //        yield return null;
+    //        if (ao.progress < 0.9f)
+    //        {
+
+    //        }
+    //        else
+    //        {
+    //            ao.allowSceneActivation = true;
+    //        }
+
+    //    }
+    //}
 
     string GetSceneName(Define.Scene type)
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// UI가 아닌 게임씬의 터치를 관리하는 매니저
+// 필요할지 모르겠음
 public class InputManager
 {
     public Action<Define.MouseEvent> MouseAction = null;

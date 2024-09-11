@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -6,7 +7,7 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
 
     #region Core
-    PlayerManager _player = new PlayerManager();
+    SaveAndLoadManager _saveLoad = new SaveAndLoadManager();
     DataManager _data = new DataManager();
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
@@ -14,10 +15,10 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     UIManager _UI = new UIManager();
     ComponentCacheManager _compCache = new ComponentCacheManager();
+    SceneManagerEx _scene = new SceneManagerEx();
 
     // MonoBehaviour 상속 매니저
-    SceneManagerEx _scene;
-    TimerManager _timer;
+    // TimerManager _timer;
 
     public static DataManager Data { get => Instance._data;  }
     public static InputManager Input { get => Instance._input;  }
@@ -26,28 +27,35 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get => Instance._sound;  }
     public static UIManager UI { get => Instance._UI;  }
     public static ComponentCacheManager CompCache { get => Instance._compCache;  }
-    public static PlayerManager Player { get => Instance._player;  }
+    public static SaveAndLoadManager SAL { get => Instance._saveLoad;  }
+    public static SceneManagerEx Scene { get => Instance._scene;  }
 
     // MonoBehaviour 상속 매니저
-    public static SceneManagerEx Scene { get => Instance._scene;  }
-    public static TimerManager Timer { get => Instance._timer; }
+    // public static TimerManager Timer { get => Instance._timer; }
     #endregion
 
     #region Contents
     TimeManager _time = new();
+    DamageableManager _damageable = new();
+    NoiseListenerManager _noise = new();
 
-    public static TimeManager Time { get=>  Instance._time; }
+    public static TimeManager Time { get =>  Instance._time; }
+    public static DamageableManager Damageable { get =>  Instance._damageable; }
+    public static NoiseListenerManager Noise { get =>  Instance._noise; }
 
     #endregion
 
     void Start()
     {
         Init();
+
+        // TEMP
+        DOTween.SetTweensCapacity(500, 125);
     }
 
     void Update()
     {
-        _input.OnUpdate();
+        // _input.OnUpdate();
     }
 
     public static void Init()
@@ -66,10 +74,9 @@ public class Managers : MonoBehaviour
 
             // MonoBehaviour 상속 매니저
             {
-                s_instance._scene = go.GetOrAddComponent<SceneManagerEx>();
-                s_instance._timer = go.GetOrAddComponent<TimerManager>();
             }
 
+            s_instance._time.Init();
             //s_instance._data.Init();
             //s_instance._pool.Init();
             //s_instance._player.Init();

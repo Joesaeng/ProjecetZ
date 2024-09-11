@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public static class Extension
 {
+    #region Core
     public static void AddUIEvent(this GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
         UI_Base.BindEvent(go, action, type);
@@ -26,9 +27,19 @@ public static class Extension
         return Util.FindChild(go, name, recursive);
     }
 
+    public static T FindChild<T>(this GameObject go, string name = null, bool recursive = false) where T : Component
+    {
+        return Util.FindChild<T>(go, name, recursive);
+    }
+
     public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
     {
         return Util.GetOrAddComponent<T>(go);
+    }
+
+    public static T GetOrAddComponent<T>(this Transform tf) where T : UnityEngine.Component
+    {
+        return Util.GetOrAddComponent<T>(tf.gameObject);
     }
 
     public static bool IsValid(this GameObject go)
@@ -36,6 +47,10 @@ public static class Extension
         return go != null && go.activeSelf;
     }
 
+
+    /// <summary>
+    /// Dictionary의 Value 값으로 Key값을 찾습니다.
+    /// </summary>
     public static bool FindKeyByValueInDictionary<K, V>(this Dictionary<K,V> dict, V value, out K key)
     {
         foreach(KeyValuePair<K,V> pair in dict)
@@ -46,6 +61,7 @@ public static class Extension
                 return true;
             }
         }
+        
         key = default(K);
         return false;
     }
@@ -66,4 +82,24 @@ public static class Extension
         // 일치하지 않으면 원래 문자열 그대로 반환
         return str;
     }
+
+    /// <summary>
+    /// string 을 Enum으로 변환
+    /// </summary>
+    public static T Parse<T>(this string stringData) where T : Enum
+    {
+        return Util.Parse<T>(stringData);
+    }
+    #endregion
+
+    #region Contents
+    /// <summary>
+    /// Transform의 z회전값을 이용하여 2D평면상의 바라보고 있는 방향벡터를 구합니다
+    /// </summary>
+    public static Vector2 GetDirection(this Transform transform)
+    {
+        return Util.GetDirection(transform);
+    }
+
+    #endregion
 }

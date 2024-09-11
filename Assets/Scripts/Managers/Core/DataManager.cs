@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 
 
-
+// Json데이터 로드
 public interface ILoader<Key, Value>
 {
     Dictionary<Key, Value> MakeDict();

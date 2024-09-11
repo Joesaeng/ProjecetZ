@@ -1,4 +1,4 @@
-public class UI_Popup : UI_Base
+public abstract class UI_Popup : UI_Base
 {
     public override void Init()
     {
@@ -8,9 +8,5 @@ public class UI_Popup : UI_Base
     public virtual void ClosePopupUI()
     {
         Managers.UI.ClosePopupUI(this);
-    }
-
-    public override void OnChangeLanguage()
-    {
     }
 }

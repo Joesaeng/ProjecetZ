@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -16,13 +17,13 @@ TagManager:
   - Player
   - Enemy
   - Props
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Interactionable
+  - GlobalLight
+  - MiniMap
+  - PlayerSight
+  - NoiseListener
+  - EnemyFoot
+  - Back
   - 
   - 
   - 
@@ -44,6 +45,9 @@ TagManager:
   - name: Ground
     uniqueID: 625865547
     locked: 0
+  - name: Minimap
+    uniqueID: 2015549951
+    locked: 0
   - name: Probs
     uniqueID: 786640045
     locked: 0
@@ -52,4 +56,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 620364761
+    locked: 0
+  - name: Effect
+    uniqueID: 647325591
     locked: 0

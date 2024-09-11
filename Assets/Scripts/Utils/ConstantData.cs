@@ -8,4 +8,6 @@ public static class ConstantData
     public const int    SceneUISortOrder = 9;
     public const int    WorldSpaceUISortOrder = 8;
 
+    public const int    MaxRayCastTargetCount = 16;
+
 }

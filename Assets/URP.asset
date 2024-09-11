@@ -18,6 +18,7 @@ MonoBehaviour:
   m_RendererData: {fileID: 0}
   m_RendererDataList:
   - {fileID: 11400000, guid: 9bbf7531dbb5b08479d73920573ce72e, type: 2}
+  - {fileID: 11400000, guid: 63f2cb9173b7341468dfaf7a225e3673, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 1
@@ -61,7 +62,7 @@ MonoBehaviour:
   m_AdditionalLightsCookieResolution: 2048
   m_AdditionalLightsCookieFormat: 3
   m_UseSRPBatcher: 1
-  m_SupportsDynamicBatching: 0
+  m_SupportsDynamicBatching: 1
   m_MixedLightingSupported: 1
   m_SupportsLightCookies: 1
   m_SupportsLightLayers: 0

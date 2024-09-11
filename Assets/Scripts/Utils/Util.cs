@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Util
 {
+    #region Core
     public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
     {
         T component = go.GetComponent<T>();
@@ -74,7 +71,7 @@ public static class Util
         return str;
     }
 
-    public static float CalculatePercent(int left, int right)
+    public static float CalculateRatio(int left, int right)
     {
         if (left > right)
             return (float)right / (float)left;
@@ -114,4 +111,21 @@ public static class Util
             return number;
         }
     }
+
+    #endregion
+
+    #region Contents
+    /// <summary>
+    /// Transform의 z회전값을 이용하여 2D 평면 상의 바라보고 있는 방향 벡터를 구합니다.
+    /// </summary>
+    public static Vector2 GetDirection(Transform tf)
+    {
+        float z = tf.eulerAngles.z;
+
+        // Z축 회전 각도를 반대로 적용하여 반시계 방향 회전 처리
+        return new Vector2(Mathf.Sin(-z * Mathf.Deg2Rad), Mathf.Cos(-z * Mathf.Deg2Rad));
+    }
+
+
+    #endregion
 }

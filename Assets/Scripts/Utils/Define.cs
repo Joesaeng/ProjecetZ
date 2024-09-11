@@ -47,9 +47,4 @@ public class Define
         PointerUp,
         Click,
     }
-
-    public enum CameraMode
-    {
-        QuaterView,
-    }
 }
